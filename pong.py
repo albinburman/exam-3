@@ -61,6 +61,11 @@ while True:
     if ball.colliderect(left_paddle) or ball.colliderect(right_paddle):
         ball_speed[0] *= -1
 
+    # Öka hastigheten lite varje träff
+        ball_speed[0] *= 1.02   
+        ball_speed[1] *= 1.02
+
+
     # Poäng
     if ball.left <= 0:
         score_right += 1
