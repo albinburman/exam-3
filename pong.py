@@ -93,9 +93,13 @@ while True:
     pygame.draw.rect(screen, GREEN, right_paddle)
     pygame.draw.ellipse(screen, WHITE, ball)
 
-    # Poängtext
-    score_text = font.render(f"{Player1}: {score_left} | {Player2}: {score_right}", True, WHITE)
-    screen.blit(score_text, (WIDTH//2 - score_text.get_width()//2, 20))
+    # Poängtext vänster spelare
+    score_left_text = font.render(f"{Player1}: {score_left}", True, WHITE)
+    screen.blit(score_left_text, (20, 20))  # Vänster sida
+
+    # Poängtext höger spelare
+    score_right_text = font.render(f"{Player2}: {score_right}", True, WHITE)
+    screen.blit(score_right_text, (WIDTH - score_right_text.get_width() - 20, 20))  # Höger sida
 
     pygame.display.flip()
     clock.tick(60)
