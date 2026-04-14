@@ -92,9 +92,9 @@ while True:
         top_paddle.x += 5
 
     # Lag 1 – bottom paddel (V/C)
-    if keys[pygame.K_v] and bottom_paddle.left > 0:
+    if keys[pygame.K_c] and bottom_paddle.left > 0:
         bottom_paddle.x -= 5
-    if keys[pygame.K_c] and bottom_paddle.right < WIDTH:
+    if keys[pygame.K_v] and bottom_paddle.right < WIDTH:
         bottom_paddle.x += 5
 
     # Bollrörelse
