@@ -3,6 +3,9 @@ import sys
 
 pygame.init()
 
+Player1 = input("Ange namn för spelare 1: ")
+Player2 = input("Ange namn för spelare 2: ")
+
 # Fönster
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -91,7 +94,7 @@ while True:
     pygame.draw.ellipse(screen, WHITE, ball)
 
     # Poängtext
-    score_text = font.render(f"PLAYER1: {score_left} | PLAYER2: {score_right}", True, WHITE)
+    score_text = font.render(f"{Player1}: {score_left} | {Player2}: {score_right}", True, WHITE)
     screen.blit(score_text, (WIDTH//2 - score_text.get_width()//2, 20))
 
     pygame.display.flip()
