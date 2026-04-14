@@ -1,11 +1,12 @@
-
 import os
 os.environ["SDL_AUDIODRIVER"] = "dummy"
+
 import pygame
 import sys
 
 pygame.init()
 
+# Spelarnamn
 Player1 = input("Ange namn för spelare 1: ")
 Player2 = input("Ange namn för spelare 2: ")
 
@@ -35,11 +36,32 @@ score_left = 0
 score_right = 0
 font = pygame.font.Font(None, 50)
 
+# Startskärm
+game_started = False
+
+# ==========================
+#        SPEL-LOOPEN
+# ==========================
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                game_started = True
+
+    # STARTSKÄRM
+    if not game_started:
+        screen.fill((0, 0, 0))
+        start_text = font.render("Tryck SPACE för att starta", True, WHITE)
+        screen.blit(start_text, (WIDTH//2 - start_text.get_width()//2,
+                                 HEIGHT//2 - start_text.get_height()//2))
+        pygame.display.flip()
+        clock.tick(60)
+        continue
 
     # Tangenttryckningar
     keys = pygame.key.get_pressed()
@@ -67,11 +89,8 @@ while True:
     # Studs mot paddlar
     if ball.colliderect(left_paddle) or ball.colliderect(right_paddle):
         ball_speed[0] *= -1
-
-    # Öka hastigheten lite varje träff
-        ball_speed[0] *= 1.06   
+        ball_speed[0] *= 1.06
         ball_speed[1] *= 1.06
-
 
     # Poäng
     if ball.left <= 0:
@@ -98,11 +117,11 @@ while True:
 
     # Poängtext vänster spelare
     score_left_text = font.render(f"{Player1}: {score_left}", True, WHITE)
-    screen.blit(score_left_text, (20, 20))  # Vänster sida
+    screen.blit(score_left_text, (20, 20))
 
     # Poängtext höger spelare
     score_right_text = font.render(f"{Player2}: {score_right}", True, WHITE)
-    screen.blit(score_right_text, (WIDTH - score_right_text.get_width() - 20, 20))  # Höger sida
+    screen.blit(score_right_text, (WIDTH - score_right_text.get_width() - 20, 20))
 
     pygame.display.flip()
     clock.tick(60)
