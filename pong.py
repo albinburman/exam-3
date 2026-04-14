@@ -22,6 +22,7 @@ right_paddle = pygame.Rect(WIDTH - 30, HEIGHT//2 - 60, paddle_width, paddle_heig
 # Boll
 ball = pygame.Rect(WIDTH//2, HEIGHT//2, 20, 20)
 ball_speed = [4, 4]
+normal_speed = [4, 4]
 
 # Poäng
 score_left = 0
@@ -70,10 +71,12 @@ while True:
     if ball.left <= 0:
         score_right += 1
         ball.center = (WIDTH//2, HEIGHT//2)
+        ball_speed = normal_speed.copy()
 
     if ball.right >= WIDTH:
         score_left += 1
         ball.center = (WIDTH//2, HEIGHT//2)
+        ball_speed = normal_speed.copy()
 
     # Rita allt
     screen.fill((0, 0, 0))
