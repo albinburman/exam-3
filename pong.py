@@ -63,8 +63,8 @@ while True:
         ball_speed[0] *= -1
 
     # Öka hastigheten lite varje träff
-        ball_speed[0] *= 1.02   
-        ball_speed[1] *= 1.02
+        ball_speed[0] *= 1.06   
+        ball_speed[1] *= 1.06
 
 
     # Poäng
