@@ -38,8 +38,7 @@ def update_direction():
 
 # Boll
 ball = pygame.Rect(WIDTH//2, HEIGHT//2, 20, 20)
-normal_speed = update_direction()
-ball_speed = normal_speed
+ball_speed = update_direction()
 
 
 # Poäng (lag)
