@@ -12,7 +12,7 @@ Player1 = input("Ange namn för lag 1 (toppen/botten): ")
 Player2 = input("Ange namn för lag 2 (vänster/höger): ")
 
 # Fönster
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 600, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("2-LAG PONG")
 clock = pygame.time.Clock()
@@ -33,12 +33,15 @@ right_paddle = pygame.Rect(WIDTH - 30, HEIGHT//2 - 60, paddle_width, paddle_heig
 top_paddle = pygame.Rect(WIDTH//2 - 60, 20, 120, 10)
 bottom_paddle = pygame.Rect(WIDTH//2 - 60, HEIGHT - 30, 120, 10)
 
-def update_direction():
-    return [(4*random.choice([1, -1, 0.5, -0.5])), (4*random.choice([1, -1, 0.5, -0.5]))]
+def random_direction():
+    x = 4 * random.choice([1, -1])
+    y = 4 * random.choice([0.5, 1, -0.5, -1])
+    return [x, y]
+
 
 # Boll
 ball = pygame.Rect(WIDTH//2, HEIGHT//2, 20, 20)
-ball_speed = update_direction()
+ball_speed = random_direction()
 
 
 # Poäng (lag)
@@ -109,22 +112,22 @@ while True:
     if ball.left <= 0:  # vänster vägg → lag 2 får poäng
         score_team_left += 1
         ball.center = (WIDTH//2, HEIGHT//2)
-        ball_speed = update_direction()
+        ball_speed = random_direction()
 
     if ball.right >= WIDTH:  # höger vägg → lag 1 får poäng
         score_team_left += 1
         ball.center = (WIDTH//2, HEIGHT//2)
-        ball_speed = update_direction()
+        ball_speed = random_direction()
 
     if ball.top <= 0:  # top → lag 1 får poäng
         score_team_right += 1
         ball.center = (WIDTH//2, HEIGHT//2)
-        ball_speed = update_direction()
+        ball_speed = random_direction()
 
     if ball.bottom >= HEIGHT:  # bottom → lag 2 får poäng
         score_team_right += 1
         ball.center = (WIDTH//2, HEIGHT//2)
-        ball_speed = update_direction()
+        ball_speed = random_direction()
 
     # Studs mot paddlar
     if ball.colliderect(left_paddle) or ball.colliderect(right_paddle):
