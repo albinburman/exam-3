@@ -3,12 +3,13 @@ os.environ["SDL_AUDIODRIVER"] = "dummy"
 
 import pygame
 import sys
+import random
 
 pygame.init()
 
 # Spelarnamn
-Player1 = input("Ange namn för lag 1 (vänster/botten): ")
-Player2 = input("Ange namn för lag 2 (höger/top): ")
+Player1 = input("Ange namn för lag 1 (toppen/botten): ")
+Player2 = input("Ange namn för lag 2 (vänster/höger): ")
 
 # Fönster
 WIDTH, HEIGHT = 800, 600
@@ -32,14 +33,18 @@ right_paddle = pygame.Rect(WIDTH - 30, HEIGHT//2 - 60, paddle_width, paddle_heig
 top_paddle = pygame.Rect(WIDTH//2 - 60, 20, 120, 10)
 bottom_paddle = pygame.Rect(WIDTH//2 - 60, HEIGHT - 30, 120, 10)
 
+def update_direction():
+    return [(4*random.choice([1, -1, 0.5, -0.5])), (4*random.choice([1, -1, 0.5, -0.5]))]
+
 # Boll
 ball = pygame.Rect(WIDTH//2, HEIGHT//2, 20, 20)
-ball_speed = [4, 4]
-normal_speed = [4, 4]
+normal_speed = update_direction()
+ball_speed = normal_speed
+
 
 # Poäng (lag)
-score_team_left = 0      # vänster + botten
-score_team_right = 0     # höger + top
+score_team_left = 0      # toppen + botten
+score_team_right = 0     # höger + vänster
 
 font = pygame.font.Font(None, 50)
 
@@ -74,9 +79,9 @@ while True:
     keys = pygame.key.get_pressed()
 
     # Lag 1 – vänster paddel (W/S)
-    if keys[pygame.K_w] and left_paddle.top > 0:
+    if keys[pygame.K_o] and left_paddle.top > 0:
         left_paddle.y -= 5
-    if keys[pygame.K_s] and left_paddle.bottom < HEIGHT:
+    if keys[pygame.K_l] and left_paddle.bottom < HEIGHT:
         left_paddle.y += 5
 
     # Lag 2 – höger paddel (UP/DOWN)
@@ -86,9 +91,9 @@ while True:
         right_paddle.y += 5
 
     # Lag 2 – top paddel (O/P)
-    if keys[pygame.K_o] and top_paddle.left > 0:
+    if keys[pygame.K_q] and top_paddle.left > 0:
         top_paddle.x -= 5
-    if keys[pygame.K_p] and top_paddle.right < WIDTH:
+    if keys[pygame.K_w] and top_paddle.right < WIDTH:
         top_paddle.x += 5
 
     # Lag 1 – bottom paddel (V/C)
@@ -103,24 +108,24 @@ while True:
 
     # Poänglogik
     if ball.left <= 0:  # vänster vägg → lag 2 får poäng
-        score_team_right += 1
+        score_team_left += 1
         ball.center = (WIDTH//2, HEIGHT//2)
-        ball_speed = normal_speed.copy()
+        ball_speed = update_direction()
 
     if ball.right >= WIDTH:  # höger vägg → lag 1 får poäng
         score_team_left += 1
         ball.center = (WIDTH//2, HEIGHT//2)
-        ball_speed = normal_speed.copy()
+        ball_speed = update_direction()
 
     if ball.top <= 0:  # top → lag 1 får poäng
-        score_team_left += 1
+        score_team_right += 1
         ball.center = (WIDTH//2, HEIGHT//2)
-        ball_speed = normal_speed.copy()
+        ball_speed = update_direction()
 
     if ball.bottom >= HEIGHT:  # bottom → lag 2 får poäng
         score_team_right += 1
         ball.center = (WIDTH//2, HEIGHT//2)
-        ball_speed = normal_speed.copy()
+        ball_speed = update_direction()
 
     # Studs mot paddlar
     if ball.colliderect(left_paddle) or ball.colliderect(right_paddle):
